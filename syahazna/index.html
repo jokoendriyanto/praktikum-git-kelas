@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="masakapahariini.com">
+        <meta name="keywords" content="masakapahariini,resep masakan, tips memasak, ulasan produk, berita kuliner, panduan memasak, tren kuliner">
+        <meta name="description" content="Masakapahariini.com adalah website yang menyediakan berbagai informasi seputar kuliner, termasuk resep masakan, tips memasak, dan berita terbaru di dunia kuliner. Temukan panduan lengkap untuk meningkatkan keterampilan memasak Anda dan tetap up-to-date dengan tren kuliner terkini.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="refresh" content="180">
+        <meta name="robots" content="index, follow">
+        <title>Masakan Nusantara</title>
+        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+        <style>
+            :root {
+                --bg: #fff7ef;
+                --card: #ffffff;
+                --accent: #ff7b54;
+                --accent-dark: #d95d30;
+                --soft: #ffe8d6;
+                --text: #2f241f;
+                --muted: #6f5d57;
+                --shadow: 0 18px 40px rgba(122, 76, 49, 0.12);
+            }
+
+            * { box-sizing: border-box; }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(135deg, #fffaf4 0%, #fbe8d7 100%);
+                color: var(--text);
+            }
+
+            .page-shell {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 32px 20px 48px;
+            }
+
+            .hero {
+                background: linear-gradient(135deg, #ffb26b 0%, #ff8f5d 100%);
+                color: #fff;
+                border-radius: 28px;
+                padding: 32px 28px;
+                box-shadow: var(--shadow);
+                margin-bottom: 28px;
+            }
+
+            .hero-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .hero h1 {
+                margin: 0;
+                font-size: clamp(2rem, 4vw, 3.2rem);
+                letter-spacing: 0.03em;
+            }
+
+            .pill {
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.3);
+                border-radius: 999px;
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                font-weight: 700;
+            }
+
+            .search-row {
+                display: flex;
+                gap: 12px;
+                margin-top: 20px;
+                flex-wrap: wrap;
+            }
+
+            .search-row input {
+                flex: 1 1 280px;
+                min-width: 220px;
+                border: none;
+                border-radius: 14px;
+                padding: 14px 16px;
+                font-size: 1rem;
+                outline: none;
+                color: var(--text);
+            }
+
+            .search-row button {
+                border: none;
+                border-radius: 14px;
+                background: var(--text);
+                color: #fff;
+                padding: 14px 20px;
+                cursor: pointer;
+                font-weight: 700;
+            }
+            .featured {
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 24px;
+                margin-bottom: 30px;
+            }
+
+            .panel {
+                background: rgba(255,255,255,0.78);
+                border: 1px solid rgba(255, 123, 84, 0.15);
+                border-radius: 24px;
+                padding: 24px;
+                box-shadow: 0 18px 30px rgba(125, 73, 58, 0.07);
+            }
+
+            .featured .panel h2,
+            .section-title {
+                margin-top: 0;
+                margin-bottom: 14px;
+                font-size: clamp(1.5rem, 3vw, 2rem);
+                color: var(--text);
+            }
+
+            .featured p,
+            .section-copy,
+            .recipe-card p,
+            .tips li,
+            .news p {
+                color: var(--muted);
+                line-height: 1.6;
+            }
+
+            .stats {
+                display: flex;
+                gap: 14px;
+                margin-top: 18px;
+                flex-wrap: wrap;
+            }
+
+            .stats div {
+                background: var(--soft);
+                border-radius: 16px;
+                padding: 14px 18px;
+                min-width: 120px;
+            }
+
+            .stats strong {
+                display: block;
+                font-size: 1.5rem;
+                margin-bottom: 4px;
+                color: var(--accent-dark);
+            }
+
+            .mini-list {
+                margin: 0;
+                padding-left: 18px;
+                line-height: 2;
+            }
+
+            .section-title {
+                margin-bottom: 20px;
+            }
+
+            .recipe-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 18px;
+            }
+
+            .recipe-card {
+                background: var(--card);
+                border: 1px solid rgba(122, 76, 49, 0.08);
+                border-radius: 22px;
+                padding: 20px;
+                box-shadow: 0 8px 20px rgba(122, 76, 49, 0.06);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .recipe-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 16px 26px rgba(122, 76, 49, 0.1);
+            }
+
+            .recipe-card.hidden {
+                display: none;
+            }
+
+            .tag {
+                display: inline-block;
+                background: rgba(255, 123, 84, 0.12);
+                color: var(--accent-dark);
+                border-radius: 999px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.03em;
+                margin-bottom: 12px;
+            }
+
+            .recipe-card h3 {
+                margin: 8px 0;
+                font-size: 1.35rem;
+            }
+
+            .meta {
+                display: flex;
+                justify-content: space-between;
+                gap: 8px;
+                margin-top: 16px;
+                font-size: 0.8rem;
+                color: var(--muted);
+                font-weight: 700;
+            }
+
+            .favorite-toggle {
+                margin-top: 18px;
+                background: #fff0ec;
+                border: none;
+                border-radius: 12px;
+                padding: 10px 14px;
+                color: var(--accent-dark);
+                font-weight: 700;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .favorite-toggle.active {
+                background: var(--accent);
+                color: #fff;
+            }
+
+            .two-col {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 24px;
+                margin-top: 34px;
+            }
+
+            .tips {
+                margin: 0;
+                padding-left: 20px;
+            }
+
+            .news {
+                margin-top: 18px;
+            }
+
+            .empty-state {
+                display: none;
+                background: #fffaf7;
+                border: 1px dashed rgba(255, 123, 84, 0.5);
+                border-radius: 18px;
+                padding: 18px;
+                color: var(--accent-dark);
+                font-weight: 700;
+                margin-top: 18px;
+            }
+
+            .empty-state.visible {
+                display: block;
+            }
+
+            footer {
+                text-align: center;
+                color: var(--muted);
+                margin-top: 32px;
+                padding-top: 18px;
+            }
+
+            @media (max-width: 760px) {
+                .featured,
+                .two-col {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero {
+                    padding: 24px 18px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page-shell">
+            <header class="hero">
+                <div class="hero-top">
+                    <h1>Masakan Nusantara</h1>
+                    <span class="pill">Rasa Indonesia</span>
+                </div>
+
+                <div class="search-row">
+                    <input id="recipeSearch" type="text" placeholder="Cari resep favoritmu..." aria-label="Cari resep">
+                    <button id="showAll" type="button">Semua Resep</button>
+                </div>
+            </header>
+
+            <section class="featured">
+                <article class="panel">
+                    <h2>Resep Masakan Tradisional</h2>
+                    <p>Selamat datang di situs kami yang menyediakan berbagai resep masakan tradisional Indonesia. Temukan berbagai resep lezat dan autentik dari berbagai daerah di Indonesia.</p>
+
+                    <div class="stats">
+                        <div>
+                            <strong>25+</strong>
+                            Resep
+                        </div>
+                        <div>
+                            <strong>7</strong>
+                            Tips
+                        </div>
+                        <div>
+                            <strong>24/7</strong>
+                            Inspirasi
+                        </div>
+                    </div>
+                </article>
+
+                <aside class="panel">
+                    <h2>Menu Hari Ini</h2>
+                    <p class="section-copy">Cocok untuk keluarga, santapan hangat, dan pengalaman kuliner yang tak terlupakan.</p>
+                    <ul class="mini-list">
+                        <li>Nasi Goreng Spesial</li>
+                        <li>Rendang Daging</li>
+                        <li>Soto Ayam Kampung</li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h2 class="section-title">Resep Populer</h2>
+                <div class="recipe-grid" id="recipeGrid">
+                    <article class="recipe-card" data-name="Nasi Goreng">
+                        <span class="tag">Populer</span>
+                        <h3>Nasi Goreng</h3>
+                        <p>Nasi goreng dengan bumbu khas, telur, dan sayuran yang menggugah selera.</p>
+                        <div class="meta"><span>25 menit</span><span>Mudah</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+
+                    <article class="recipe-card" data-name="Sate Ayam">
+                        <span class="tag">Favorit</span>
+                        <h3>Sate Ayam</h3>
+                        <p>Potongan ayam yang dipanggang dengan bumbu kacang yang kaya rasa.</p>
+                        <div class="meta"><span>40 menit</span><span>Sedang</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+
+                    <article class="recipe-card" data-name="Rendang Daging">
+                        <span class="tag">Klasik</span>
+                        <h3>Rendang Daging</h3>
+                        <p>Masakan kaya rempah dengan rasa gurih dan pedas yang tahan lama.</p>
+                        <div class="meta"><span>2 jam</span><span>Rumit</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+
+                    <article class="recipe-card" data-name="Gado Gado">
+                        <span class="tag">Sehat</span>
+                        <h3>Gado-Gado</h3>
+                        <p>Sayur segar dengan saus kacang yang creamy dan memberi rasa segar.</p>
+                        <div class="meta"><span>20 menit</span><span>Gampang</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+
+                    <article class="recipe-card" data-name="Soto Ayam">
+                        <span class="tag">Hangat</span>
+                        <h3>Soto Ayam</h3>
+                        <p>Kuah bening dengan ayam, bawang goreng, dan rempah yang aromatik.</p>
+                        <div class="meta"><span>35 menit</span><span>Mudah</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+
+                    <article class="recipe-card" data-name="Pempek">
+                        <span class="tag">Khas</span>
+                        <h3>Pempek</h3>
+                        <p>Bakso ikan dengan tekstur kenyal dan cocolan kuah cuka yang gurih.</p>
+                        <div class="meta"><span>50 menit</span><span>Sedang</span></div>
+                        <button class="favorite-toggle" type="button">♡ Simpan</button>
+                    </article>
+                </div>
+                <div id="emptyState" class="empty-state">Maaf, resep yang kamu cari belum tersedia. Coba kata kunci lain.</div>
+            </section>
+
+            <section class="two-col">
+                <article class="panel">
+                    <h2>Tips Memasak</h2>
+                    <ol class="tips">
+                        <li>Gunakan bahan-bahan segar untuk hasil terbaik.</li>
+                        <li>Ikuti resep dengan teliti, terutama dalam hal takaran bumbu.</li>
+                        <li>Cobalah variasi bumbu untuk menciptakan rasa baru.</li>
+                        <li>Latihan membuat masakan secara konsisten akan meningkatkan kemampuan Anda.</li>
+                    </ol>
+                </article>
+
+                <article class="panel news">
+                    <h2>Berita Kuliner Terbaru</h2>
+                    <p>Dapatkan informasi terbaru seputar dunia kuliner, termasuk tren makanan, restoran baru, dan tips memasak dari para ahli.</p>
+                    <p>Tren kuliner masa kini menekankan bahan lokal, inovasi rasa, dan pengalaman makan yang lebih personal.</p>
+                </article>
+            </section>
+
+            <footer>
+                © 2026 Masakan Nusantara • Dibuat untuk inspirasi kuliner sehari-hari
+            </footer>
+        </div>
+
+        <script>
+            const searchInput = document.getElementById('recipeSearch');
+            const recipeCards = [...document.querySelectorAll('.recipe-card')];
+            const emptyState = document.getElementById('emptyState');
+            const showAllButton = document.getElementById('showAll');
+
+            function updateFilter() {
+                const query = searchInput.value.trim().toLowerCase();
+                let visibleCount = 0;
+
+                recipeCards.forEach((card) => {
+                    const text = card.dataset.name.toLowerCase() + ' ' + card.textContent.toLowerCase();
+                    const matches = text.includes(query);
+                    card.classList.toggle('hidden', !matches);
+                    if (matches) visibleCount++;
+                });
+
+                emptyState.classList.toggle('visible', visibleCount === 0 && query !== '');
+            }
+
+            searchInput.addEventListener('input', updateFilter);
+            showAllButton.addEventListener('click', () => {
+                searchInput.value = '';
+                updateFilter();
+                searchInput.focus();
+            });
+
+            document.querySelectorAll('.favorite-toggle').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const isActive = button.classList.toggle('active');
+                    button.textContent = isActive ? '♥ Tersimpan' : '♡ Simpan';
+                });
+            });
+        </script>
+    </body>
+</html>
