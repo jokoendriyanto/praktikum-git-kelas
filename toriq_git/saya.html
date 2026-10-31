@@ -2,192 +2,304 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Website</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: #080d1a;
+    color: white;
+    transition: 0.3s;
+}
 
-        header {
-            background: #0f172a;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
+/* NAVBAR */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 8%;
+    background: #10182b;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
 
-        header h2 {
-            color: #38bdf8;
-        }
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #38bdf8;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+}
 
-        nav a:hover {
-            color: #38bdf8;
-        }
+nav a:hover {
+    color: #38bdf8;
+}
 
-        .hero {
-            background: linear-gradient(135deg, #0f172a, #2563eb);
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
+/* HERO */
+.hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    background: radial-gradient(circle at top, #183b70, #080d1a 65%);
+}
 
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
+.hero h1 {
+    font-size: clamp(35px, 6vw, 65px);
+    margin-bottom: 20px;
+    animation: muncul 1s ease;
+}
 
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            color: #dbeafe;
-        }
+.hero h1 span {
+    color: #38bdf8;
+}
 
-        .btn {
-            display: inline-block;
-            background: #38bdf8;
-            color: #0f172a;
-            padding: 13px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.hero p {
+    color: #b8c4d9;
+    max-width: 550px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
 
-        .btn:hover {
-            background: white;
-        }
+.btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    color: #08111f;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
+.btn:hover {
+    background: white;
+    transform: translateY(-4px);
+}
 
-        .title {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+/* CONTENT */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 80px 25px;
+}
 
-        .cards {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+.title {
+    text-align: center;
+    margin-bottom: 40px;
+}
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            flex: 1;
-            min-width: 220px;
-            box-shadow: 0 5px 20px #00000010;
-        }
+.title h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
 
-        .card h3 {
-            color: #2563eb;
-            margin-bottom: 12px;
-        }
+.title p {
+    color: #94a3b8;
+}
 
-        .contact {
-            text-align: center;
-            background: #e2e8f0;
-            padding: 50px 20px;
-        }
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
 
-        footer {
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+.card {
+    background: #111c31;
+    padding: 30px;
+    border: 1px solid #263752;
+    border-radius: 15px;
+    transition: 0.3s;
+}
 
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #38bdf8;
+}
 
-            nav a {
-                margin: 0 7px;
-            }
+.card h3 {
+    color: #38bdf8;
+    margin-bottom: 15px;
+}
 
-            .hero h1 {
-                font-size: 30px;
-            }
-        }
-    </style>
+.card p {
+    color: #aab7ca;
+    line-height: 1.7;
+}
+
+/* JAM */
+.clock {
+    text-align: center;
+    padding: 30px;
+    color: #38bdf8;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #10182b;
+    color: #94a3b8;
+}
+
+/* ANIMATION */
+@keyframes muncul {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* LIGHT MODE */
+.light {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.light header,
+.light footer {
+    background: #ffffff;
+}
+
+.light nav a {
+    color: #0f172a;
+}
+
+.light .hero {
+    background: linear-gradient(135deg, #dbeafe, #f8fafc);
+}
+
+.light .hero p,
+.light .title p {
+    color: #475569;
+}
+
+.light .card {
+    background: white;
+    border-color: #e2e8f0;
+}
+
+.light .card p {
+    color: #475569;
+}
+
+@media(max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    nav a {
+        margin: 0 7px;
+        font-size: 14px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h2>MyWebsite.</h2>
+<header>
+    <div class="logo">MyWebsite.</div>
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#service">Service</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#service">Service</a>
+    </nav>
 
-    <section class="hero" id="home">
-        <h1>Selamat Datang di Website Saya</h1>
-        <p>Tempat belajar, berkembang, dan menciptakan sesuatu yang baru.</p>
-        <a href="#about" class="btn">Mulai Sekarang</a>
-    </section>
+    <button class="btn" onclick="ubahTema()">☀ / ☾</button>
+</header>
 
-    <div class="container" id="about">
-        <div class="title">
-            <h2>Tentang Kami</h2>
-            <p>Mengenal lebih dekat website sederhana ini.</p>
-        </div>
+<section class="hero" id="home">
+    <h1>Build Your <span>Future.</span></h1>
 
-        <div class="cards">
-            <div class="card">
-                <h3>HTML</h3>
-                <p>HTML digunakan untuk membuat struktur dan isi halaman website.</p>
-            </div>
+    <p>
+        Selamat datang di website modern saya.
+        Belajar teknologi, menciptakan inovasi,
+        dan membangun masa depan bersama.
+    </p>
 
-            <div class="card">
-                <h3>CSS</h3>
-                <p>CSS digunakan untuk mengatur warna, desain, dan tampilan website.</p>
-            </div>
+    <a href="#about" class="btn">Explore Now →</a>
+</section>
 
-            <div class="card">
-                <h3>Responsive</h3>
-                <p>Website dapat menyesuaikan tampilan dengan ukuran layar perangkat.</p>
-            </div>
-        </div>
+<div class="container" id="about">
+
+    <div class="title">
+        <h2>About Website</h2>
+        <p>Teknologi yang digunakan dalam website ini.</p>
     </div>
 
-    <section class="contact" id="contact">
-        <h2>Ingin Mengenal Lebih Lanjut?</h2>
-        <p>Hubungi kami untuk mendapatkan informasi lebih lanjut.</p>
-        <br>
-        <a href="mailto:contoh@gmail.com" class="btn">Hubungi Kami</a>
-    </section>
+    <div class="cards">
 
-    <footer>
-        <p>&copy; 2026 MyWebsite. Dibuat dengan HTML & CSS.</p>
-    </footer>
+        <div class="card">
+            <h3>HTML</h3>
+            <p>Membangun struktur utama halaman website.</p>
+        </div>
+
+        <div class="card">
+            <h3>CSS</h3>
+            <p>Mengatur desain, warna, layout, dan animasi.</p>
+        </div>
+
+        <div class="card">
+            <h3>JavaScript</h3>
+            <p>Membuat website lebih interaktif dan dinamis.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="clock">
+    <p id="jam">00:00:00</p>
+    <small>Waktu Sekarang</small>
+</div>
+
+<footer>
+    <p>© 2026 MyWebsite. All Rights Reserved.</p>
+</footer>
+
+<script>
+// JAM DIGITAL
+function updateJam() {
+    const sekarang = new Date();
+
+    document.getElementById("jam").textContent =
+        sekarang.toLocaleTimeString("id-ID");
+}
+
+setInterval(updateJam, 1000);
+updateJam();
+
+// DARK MODE DAN LIGHT MODE
+function ubahTema() {
+    document.body.classList.toggle("light");
+}
+</script>
 
 </body>
 </html>
