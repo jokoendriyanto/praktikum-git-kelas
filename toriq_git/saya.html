@@ -1,99 +1,193 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Modern Sederhana</title>
+    <title>My Website</title>
+
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
         header {
-            background: #2c3e50;
-            color: #fff;
-            padding: 1rem 0;
+            background: #0f172a;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        header h2 {
+            color: #38bdf8;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a, #2563eb);
+            color: white;
             text-align: center;
+            padding: 100px 20px;
         }
-        nav ul {
-            padding: 0;
-            list-style: none;
-            text-align: center;
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
         }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #dbeafe;
         }
-        nav ul li a {
-            color: #fff;
+
+        .btn {
+            display: inline-block;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 13px 25px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
         }
-        .container {
-            max-width: 960px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        .btn {
-            display: inline-block;
-            background: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+
         .btn:hover {
-            background: #2980b9;
+            background: white;
         }
+
+        .container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 220px;
+            box-shadow: 0 5px 20px #00000010;
+        }
+
+        .card h3 {
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .contact {
+            text-align: center;
+            background: #e2e8f0;
+            padding: 50px 20px;
+        }
+
         footer {
+            background: #0f172a;
+            color: white;
             text-align: center;
             padding: 20px;
-            background: #2c3e50;
-            color: #fff;
-            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
-        <h1>Selamat Datang di Website Saya</h1>
+        <h2>MyWebsite.</h2>
+
         <nav>
-            <ul>
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#about">Tentang</a></li>
-                <li><a href="#contact">Kontak</a></li>
-            </ul>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#service">Service</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
-    <div class="container">
-        <section id="home">
-            <h2>Bagian Utama</h2>
-            <p>Ini adalah contoh paragraf untuk konten website. HTML digunakan untuk membuat struktur halaman web, sementara CSS digunakan untuk mempercantiknya.</p>
-            <a href="#" class="btn">Pelajari Lebih Lanjut</a>
-        </section>
+    <section class="hero" id="home">
+        <h1>Selamat Datang di Website Saya</h1>
+        <p>Tempat belajar, berkembang, dan menciptakan sesuatu yang baru.</p>
+        <a href="#about" class="btn">Mulai Sekarang</a>
+    </section>
 
-        <section id="about" style="margin-top: 20px;">
+    <div class="container" id="about">
+        <div class="title">
             <h2>Tentang Kami</h2>
-            <p>Website ini dirancang dengan struktur yang bersih dan mudah dipahami oleh pemula. Anda dapat memodifikasi warna, font, dan layout sesuai kebutuhan.</p>
-        </section>
+            <p>Mengenal lebih dekat website sederhana ini.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h3>HTML</h3>
+                <p>HTML digunakan untuk membuat struktur dan isi halaman website.</p>
+            </div>
+
+            <div class="card">
+                <h3>CSS</h3>
+                <p>CSS digunakan untuk mengatur warna, desain, dan tampilan website.</p>
+            </div>
+
+            <div class="card">
+                <h3>Responsive</h3>
+                <p>Website dapat menyesuaikan tampilan dengan ukuran layar perangkat.</p>
+            </div>
+        </div>
     </div>
 
+    <section class="contact" id="contact">
+        <h2>Ingin Mengenal Lebih Lanjut?</h2>
+        <p>Hubungi kami untuk mendapatkan informasi lebih lanjut.</p>
+        <br>
+        <a href="mailto:contoh@gmail.com" class="btn">Hubungi Kami</a>
+    </section>
+
     <footer>
-        <p>&copy; 2026 Website Sederhana. Dibuat dengan HTML & CSS.</p>
+        <p>&copy; 2026 MyWebsite. Dibuat dengan HTML & CSS.</p>
     </footer>
 
 </body>
-</html>   
+</html>
