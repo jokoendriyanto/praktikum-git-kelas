@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animasi Pesawat Terbang</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b1d3a; font-family: system-ui, sans-serif; }
+  canvas { display: block; width: 100%; height: 100%; }
+  .hint {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+    color: #fff; background: rgba(0,0,0,.35); padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hint">Gerakkan mouse / sentuh layar untuk mengarahkan pesawat</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+// --- Input: pesawat mengikuti posisi mouse/sentuhan secara vertikal ---
+let targetY = H / 2;
+function setTarget(y) { targetY = y; }
+window.addEventListener('mousemove', e => setTarget(e.clientY));
+window.addEventListener('touchmove', e => setTarget(e.touches[0].clientY), { passive: true });
+
+// --- Awan (3 lapisan parallax) ---
+const clouds = [];
+function makeCloud(layer, x) {
+  const scale = [0.5, 0.9, 1.4][layer];
+  return {
+    x: x ?? Math.random() * W,
+    y: Math.random() * H * 0.75,
+    s: scale * (0.8 + Math.random() * 0.6),
+    speed: [0.4, 1.0, 2.2][layer],
+    alpha: [0.35, 0.6, 0.85][layer]
+  };
+}
+for (let l = 0; l < 3; l++) for (let i = 0; i < 6; i++) clouds.push({ ...makeCloud(l), layer: l });
+
+function drawCloud(c) {
+  ctx.save();
+  ctx.translate(c.x, c.y);
+  ctx.scale(c.s, c.s);
+  ctx.fillStyle = `rgba(255,255,255,${c.alpha})`;
+  ctx.beginPath();
+  ctx.arc(0, 0, 28, 0, Math.PI * 2);
+  ctx.arc(32, -12, 34, 0, Math.PI * 2);
+  ctx.arc(68, 0, 28, 0, Math.PI * 2);
+  ctx.arc(34, 10, 30, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- Bintang kecil di langit atas ---
+const stars = Array.from({ length: 60 }, () => ({
+  x: Math.random(), y: Math.random() * 0.4, r: Math.random() * 1.4 + 0.3, t: Math.random() * 6
+}));
+
+// --- Pesawat ---
+const plane = { x: 0, y: 0, tilt: 0, vy: 0 };
+let t = 0;
+const trail = [];
+
+function drawPlane(p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.tilt);
+  const s = Math.max(0.7, Math.min(1.4, W / 900));
+  ctx.scale(s, s);
+
+  // sayap belakang
+  ctx.fillStyle = '#b8c4d6';
+  ctx.beginPath();
+  ctx.moveTo(-20, -4); ctx.lineTo(-55, -38); ctx.lineTo(-40, -38); ctx.lineTo(5, -4);
+  ctx.closePath(); ctx.fill();
+
+  // ekor
+  ctx.fillStyle = '#e63946';
+  ctx.beginPath();
+  ctx.moveTo(-85, -4); ctx.lineTo(-100, -34); ctx.lineTo(-80, -34); ctx.lineTo(-55, -4);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#c1303b';
+  ctx.beginPath();
+  ctx.moveTo(-88, 6); ctx.lineTo(-108, 14); ctx.lineTo(-80, 14); ctx.lineTo(-60, 6);
+  ctx.closePath(); ctx.fill();
+
+  // badan
+  const body = ctx.createLinearGradient(0, -16, 0, 18);
+  body.addColorStop(0, '#ffffff');
+  body.addColorStop(1, '#cfd8e6');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(-95, -2);
+  ctx.quadraticCurveTo(-90, -16, -60, -16);
+  ctx.lineTo(55, -16);
+  ctx.quadraticCurveTo(100, -14, 112, 2);
+  ctx.quadraticCurveTo(100, 16, 55, 18);
+  ctx.lineTo(-60, 18);
+  ctx.quadraticCurveTo(-90, 16, -95, -2);
+  ctx.closePath(); ctx.fill();
+
+  // garis merah
+  ctx.fillStyle = '#e63946';
+  ctx.fillRect(-70, 6, 150, 3);
+
+  // jendela
+  ctx.fillStyle = '#4aa8ff';
+  for (let i = 0; i < 9; i++) {
+    ctx.beginPath();
+    ctx.arc(-50 + i * 13, -4, 3.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // kokpit
+  ctx.fillStyle = '#2b6cb0';
+  ctx.beginPath();
+  ctx.moveTo(70, -13); ctx.quadraticCurveTo(92, -12, 100, -3); ctx.lineTo(70, -3);
+  ctx.closePath(); ctx.fill();
+
+  // mesin jet
+  ctx.fillStyle = '#8795ab';
+  ctx.beginPath(); ctx.ellipse(10, 24, 18, 7, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#5a6a82';
+  ctx.beginPath(); ctx.ellipse(26, 24, 3, 6, 0, 0, Math.PI * 2); ctx.fill();
+
+  // sayap depan
+  ctx.fillStyle = '#9fb0c8';
+  ctx.beginPath();
+  ctx.moveTo(-10, 8); ctx.lineTo(-45, 44); ctx.lineTo(-22, 44); ctx.lineTo(35, 8);
+  ctx.closePath(); ctx.fill();
+
+  ctx.restore();
+}
+
+// --- Loop animasi ---
+function frame() {
+  t += 0.016;
+
+  // langit gradasi
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, '#0b1d3a');
+  sky.addColorStop(0.45, '#2a6fb8');
+  sky.addColorStop(1, '#ffb88c');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  // bintang
+  stars.forEach(st => {
+    ctx.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(t * 1.5 + st.t));
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(st.x * W, st.y * H, st.r, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  // matahari
+  const sx = W * 0.82, sy = H * 0.78;
+  const glow = ctx.createRadialGradient(sx, sy, 10, sx, sy, 180);
+  glow.addColorStop(0, 'rgba(255,230,150,.95)');
+  glow.addColorStop(1, 'rgba(255,200,120,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(sx - 200, sy - 200, 400, 400);
+  ctx.fillStyle = '#fff1b8';
+  ctx.beginPath(); ctx.arc(sx, sy, 38, 0, Math.PI * 2); ctx.fill();
+
+  // awan layer belakang, lalu depan
+  for (let l = 0; l < 3; l++) {
+    clouds.filter(c => c.layer === l).forEach(c => {
+      c.x -= c.speed;
+      if (c.x < -200) { Object.assign(c, makeCloud(l, W + 100)); }
+      drawCloud(c);
+    });
+  }
+
+  // pesawat: posisi X tetap, Y mengikuti target dengan easing
+  plane.x = W * 0.38;
+  const baseY = targetY + Math.sin(t * 2) * 8;
+  const dy = baseY - plane.y;
+  plane.vy += (dy * 0.02 - plane.vy) * 0.15;
+  plane.y += plane.vy;
+  plane.tilt = Math.max(-0.35, Math.min(0.35, plane.vy * 0.04));
+
+  // jejak asap
+  trail.push({ x: plane.x - 105, y: plane.y + 4, a: 0.7 });
+  trail.forEach(p => { p.x -= 3.5; p.a -= 0.008; });
+  while (trail.length && trail[0].a <= 0) trail.shift();
+  trail.forEach(p => {
+    ctx.fillStyle = `rgba(255,255,255,${Math.max(p.a, 0) * 0.6})`;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 4 + (0.7 - p.a) * 14, 0, Math.PI * 2); ctx.fill();
+  });
+
+  drawPlane(plane);
+  requestAnimationFrame(frame);
+}
+
+plane.y = targetY = H / 2;
+frame();
+</script>
+</body>
+</html>
